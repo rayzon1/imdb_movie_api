@@ -7,7 +7,7 @@
 .poster {
     width: 150px;
     height: 200px;
-    border: 1px solid blue;
+    
 }
 
 .posterContainer {
@@ -17,17 +17,22 @@
     text-align: center;
     display: inline-table;
     margin: 10px;
+    position: relative;
+    
 }
 
+.cover {
+    position: relative;
+    z-index: 1;
+    text-align: top;
+    bottom: 200px;
+    height: 0px;
+}
 
 img {
     margin: 10px;
 }
 
-img:hover {
-    opacity: .2;
-    
-}
 
 label {
     text-align: center;

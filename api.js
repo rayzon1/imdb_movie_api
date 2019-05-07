@@ -5,16 +5,52 @@ class imdbGenerator {
   }
 
   searchMovie(movie) {
-    let url = "http://www.omdbapi.com/?apikey=ba2a0c60&s=";
+    let url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
     url += movie;
     return url;
+  }
+
+  static pictureStyle(t){
+    $(t).prop('style', 'opacity: 0.2');
+    $(t).next().show();
+    $(t).on('mouseleave', () => {
+      $(t).prop('style', 'opacity: 1');
+      $(t).next().hide();
+      
+    })
+  }
+
+  static textStyle(t) {
+    $(t).prev().prop('style', 'opacity: 0.2');
+    $(t).show();
+  }
+
+  createReview(res) {
+    $.each(res.Search, (index, movie) => {
+      let search = this.searchMovie(`i=${movie.imdbID}`);
+      $.ajax({
+        type: "GET",
+        url: search,
+        dataType: "json",
+        success: (response) => {
+            console.log(response);
+          }
+      }); //end ajax
+      
+    })
+    //console.log(res.Search[0].imdbID);
   }
 
   createMovies(res) {
     $.each(res.Search, (index, movie) => {
       this.$results.append(`
         <div class="posterContainer">
-        <img src="${movie.Poster}" class="poster">
+        <img src="${movie.Poster}" class="poster" onmouseover="imdbGenerator.pictureStyle(this)">
+        <div class="cover" onmouseover="imdbGenerator.textStyle(this)"hidden>
+        text text text<br>
+        text text text<br>
+        text text text<br>
+        </div>
         ${movie.Title}<br>
         ${movie.Year}
         </div>
@@ -29,26 +65,22 @@ class imdbGenerator {
       url: movie,
       dataType: "json",
       success: (response) => {
-          //console.log(response);
-          this.createMovies(response)
+          this.createMovies(response);
+          this.createReview(response);
         }
     }); //end ajax
   }
-
-  
-
 }
-
-
-
-
 
 $("form").submit(function(event) {
     event.preventDefault();
     
     const gen = new imdbGenerator();
     const $movie = $("#movie");
-    let mov = gen.searchMovie($movie.val());
+    let mov = gen.searchMovie(`s=${$movie.val()}`);
     gen.sendAjax(mov);
     
 });
+
+
+
