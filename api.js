@@ -1,36 +1,54 @@
-function sendAjax(movie) {
-  const $results = $("#results");
-  const random = Math.floor(Math.random() * 10);
+class imdbGenerator {
+  constructor() {
+    this.$results = $("#results");
+    
+  }
 
-  $.ajax({
-    type: "GET",
-    url: movie,
-    dataType: "json",
-    success: function(response) {
-      console.log(response);
-      $.each(response.Search, function(index, movie) {
-          console.log(movie);
-          $results.append(`
+  searchMovie(movie) {
+    let url = "http://www.omdbapi.com/?apikey=ba2a0c60&s=";
+    url += movie;
+    return url;
+  }
+
+  createMovies(res) {
+    $.each(res.Search, (index, movie) => {
+      this.$results.append(`
         <div class="posterContainer">
-        <img src="${movie.Poster}" id="poster">
+        <img src="${movie.Poster}" class="poster">
         ${movie.Title}<br>
         ${movie.Year}
         </div>
-        `);
-      });
-    }
-  });
+      `);
+    }); //end each
+    
+  }
+
+  sendAjax(movie) {
+    $.ajax({
+      type: "GET",
+      url: movie,
+      dataType: "json",
+      success: (response) => {
+          //console.log(response);
+          this.createMovies(response)
+        }
+    }); //end ajax
+  }
+
+  
+
 }
 
-function searchMovie(movie) {
-  let url = "http://www.omdbapi.com/?apikey=ba2a0c60&s=";
-  url += movie;
-  return url;
-}
+
+
+
 
 $("form").submit(function(event) {
     event.preventDefault();
+    
+    const gen = new imdbGenerator();
     const $movie = $("#movie");
-    let mov = searchMovie($movie.val());
-  sendAjax(mov);
+    let mov = gen.searchMovie($movie.val());
+    gen.sendAjax(mov);
+    
 });
