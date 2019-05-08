@@ -25,7 +25,8 @@ class imdbGenerator {
     $(t).show();
   }
 
-  createReview(res) {
+  getReview(res) {
+    let x = [];
     $.each(res.Search, (index, movie) => {
       let search = this.searchMovie(`i=${movie.imdbID}`);
       $.ajax({
@@ -33,26 +34,31 @@ class imdbGenerator {
         url: search,
         dataType: "json",
         success: (response) => {
-            console.log(response);
+            //this.createReview(response);
+            x.push(response);
+            //console.log(response);
           }
-      }); //end ajax
-      
-    })
-    //console.log(res.Search[0].imdbID);
+      }); //end ajax  
+    }); //end loop
+    //this.createMovies(x);
+  }
+
+  createReview(res) {
+    let $movieResults = $('.posterContainer');
+    //console.log(res.Title);
+    //console.log($movieResults)
+   
+  
   }
 
   createMovies(res) {
+    console.log(res);
     $.each(res.Search, (index, movie) => {
       this.$results.append(`
         <div class="posterContainer">
         <img src="${movie.Poster}" class="poster" onmouseover="imdbGenerator.pictureStyle(this)">
         <div class="cover" onmouseover="imdbGenerator.textStyle(this)"hidden>
-        text text text<br>
-        text text text<br>
-        text text text<br>
-        </div>
-        ${movie.Title}<br>
-        ${movie.Year}
+        </div>${movie.Title}<br>
         </div>
       `);
     }); //end each
@@ -66,7 +72,7 @@ class imdbGenerator {
       dataType: "json",
       success: (response) => {
           this.createMovies(response);
-          this.createReview(response);
+          this.getReview(response);
         }
     }); //end ajax
   }
