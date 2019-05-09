@@ -21,12 +21,14 @@
     
 }
 
+
 .cover {
     position: relative;
     z-index: 1;
     text-align: top;
     bottom: 200px;
     height: 0px;
+    font-size: 12px;
 }
 
 img {

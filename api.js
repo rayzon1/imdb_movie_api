@@ -1,12 +1,11 @@
-class imdbGenerator {
+class ImdbGenerator {
   constructor() {
     this.$results = $("#results");
-    
   }
 
-  searchMovie(movie) {
+  createUrl(id) {
     let url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
-    url += movie;
+    url += id;
     return url;
   }
 
@@ -26,44 +25,61 @@ class imdbGenerator {
   }
 
   getReview(res) {
-    let x = [];
     $.each(res.Search, (index, movie) => {
-      let search = this.searchMovie(`i=${movie.imdbID}`);
+      let search = this.createUrl(`i=${movie.imdbID}`);
       $.ajax({
         type: "GET",
         url: search,
         dataType: "json",
         success: (response) => {
             //this.createReview(response);
-            x.push(response);
+            //this.movieInfo.push(response);
+            this.createMovies(response);
             //console.log(response);
           }
       }); //end ajax  
     }); //end loop
-    //this.createMovies(x);
+    //this.createMovies()
   }
 
   createReview(res) {
-    let $movieResults = $('.posterContainer');
-    //console.log(res.Title);
-    //console.log($movieResults)
-   
-  
+    // Object.keys(res).forEach(key => {
+    
+    // })
   }
 
   createMovies(res) {
-    console.log(res);
-    $.each(res.Search, (index, movie) => {
-      this.$results.append(`
-        <div class="posterContainer">
-        <img src="${movie.Poster}" class="poster" onmouseover="imdbGenerator.pictureStyle(this)">
-        <div class="cover" onmouseover="imdbGenerator.textStyle(this)"hidden>
-        </div>${movie.Title}<br>
-        </div>
-      `);
-    }); //end each
+    //console.log(this.movieInfo.length);
+    //console.log(typeof this.movieInfo);
+    // $.each(this.movieInfo, (index, movie) => {
+    //   this.$results.append(`
+    //     <div class="posterContainer">
+    //     <img src="${movie.Poster}" class="poster" onmouseover="ImdbGenerator.pictureStyle(this)">
+    //     <div class="cover" onmouseover="ImdbGenerator.textStyle(this)"hidden>
+    //     </div>${movie.Title}<br>
+    //     </div>
+    //   `);
+    // }); //end each
     
+    //res['Ratings'].forEach(element => console.log(element['Source']));
+    console.log(res)
+    let construct = '<div class="posterContainer">';
+    construct += `<img src="${res['Poster']}" class="poster" onmouseover="ImdbGenerator.pictureStyle(this)">`;
+    construct += `<div class="cover" onmouseover="ImdbGenerator.textStyle(this)"hidden>
+    ${res['Ratings'][0]['Source']}<br>
+    ${res['Ratings'][0]['Value']}<br><br>
+    ${res['Ratings'][1] ? res['Ratings'][1]['Source'] : ''}<br>
+    ${res['Ratings'][1] ? res['Ratings'][1]['Value'] : ''}<br><br>
+    ${res['Ratings'][2] ? res['Ratings'][2]['Source'] : ''}<br>
+    ${res['Ratings'][2] ? res['Ratings'][2]['Value'] : ''}<br>
+
+    </div>`;
+    construct += `<span>${res['Title']}</span><br>`;
+    construct += '</div>';
+    this.$results.append(construct);
+    //this.createReview(res['Ratings']);
   }
+
 
   sendAjax(movie) {
     $.ajax({
@@ -71,22 +87,14 @@ class imdbGenerator {
       url: movie,
       dataType: "json",
       success: (response) => {
-          this.createMovies(response);
+          //this.createMovies(response);
           this.getReview(response);
         }
     }); //end ajax
   }
 }
 
-$("form").submit(function(event) {
-    event.preventDefault();
-    
-    const gen = new imdbGenerator();
-    const $movie = $("#movie");
-    let mov = gen.searchMovie(`s=${$movie.val()}`);
-    gen.sendAjax(mov);
-    
-});
+
 
 
 
