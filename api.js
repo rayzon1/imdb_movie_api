@@ -18,8 +18,8 @@ const getMoviesbyId = (val) => {
   return val.map(mov => getMovies(url + `i=${mov}`))
 }
 
+
 const createMovies = (res) => {
-    //console.log(res);
     if(res['Ratings'].length > 0){
       let construct = '<div class="posterContainer">';
       construct += `<img src="${res['Poster']}" class="poster" >`;
@@ -40,6 +40,7 @@ const createMovies = (res) => {
 
 const generateButtons = (results) => {
     //console.log(results);
+
     let res = results.totalResults
     let num = Math.floor((res / 10));
     if (res > 100) {
