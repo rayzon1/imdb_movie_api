@@ -3,9 +3,11 @@
 
 $("form").submit(function(event) {
     event.preventDefault();
+    
     const newUrl = url + `s=${$movie.val()}`
     getMovies(newUrl)
         .then(val => {
+            $('.button').remove()
             generateButtons(val);
             return val;
         })
@@ -13,10 +15,12 @@ $("form").submit(function(event) {
         .then(val => getMoviesbyId(val))
         .then(val => Promise.all(val))
         .then(val => {
+            $('.posterContainer').remove()
             val.map(mov => createMovies(mov));
             return val;
         })
-  
+    
+    
   }); //end form
 
 $(document).on('mouseenter', '.poster', function () {
