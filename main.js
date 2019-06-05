@@ -1,9 +1,11 @@
 //const gen = new ImdbGenerator();
-//const $movie = $("#movie");
+const $resultsDiv = $("#results_container");
+const $loadingBar = $(".loading");
+const $posters = $(".posterContainer");
+$loadingBar.hide(); 
 
 $("form").submit(function(event) {
     event.preventDefault();
-    
     const newUrl = url + `s=${$movie.val()}`
     getMovies(newUrl)
         .then(val => {
@@ -19,8 +21,6 @@ $("form").submit(function(event) {
             val.map(mov => createMovies(mov));
             return val;
         })
-    
-    
   }); //end form
 
 $(document).on('mouseenter', '.poster', function () {
@@ -44,11 +44,11 @@ $(document).on('mouseenter', '.cover', function () {
 }); //end mouseenter
 
 $(document).on('click', '.button', function () {
-    //console.log($(this).text())
     $('#results').empty();
+    $resultsDiv.append($loadingBar);
+    $loadingBar.show();
     const newUrl = url + `s=${$movie.val()}` + '&' + `page=${$(this).text()}`
     getMovies(newUrl)
-        //.then(val => console.log(val))
         .then(val => getIds(val.Search)) //gets search results by ID
         .then(val => getMoviesbyId(val))
         .then(val => Promise.all(val))
@@ -56,5 +56,6 @@ $(document).on('click', '.button', function () {
             val.map(mov => createMovies(mov));
             return val;
         })
-    //console.log(this);
+    
+    
 }); //end click

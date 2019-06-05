@@ -1,9 +1,10 @@
-
+// Global variables for dom manipulation and omdapi url.
 const $movie = $('#movie');
 const $results = $("#results");
 const $pagination = $('.pagination');
 const url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
 
+// This will communicate with the api while returning titles in json format. 
 const getMovies = async (url) => {
   try {
     const val = await fetch(url);
@@ -22,9 +23,8 @@ const getMoviesbyId = (val) => {
   return val.map(mov => getMovies(url + `i=${mov}`))
 }
 
-
 const createMovies = (res) => {
-
+  
   // create <span> for each rating!
     if(res['Ratings'].length > 0){
       let construct = `<a href="https://www.imdb.com/title/${res['imdbID']}" target="_blank"><div class="posterContainer">`;
@@ -39,8 +39,10 @@ const createMovies = (res) => {
       </div></a>`;
       construct += `<span>${res['Title']}</span><br>`;
       construct += '</div>';
+      
       $results.append(construct);
-    } 
+      $loadingBar.hide();
+    }
   }
 
 

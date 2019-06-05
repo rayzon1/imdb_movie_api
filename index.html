@@ -12,22 +12,27 @@
     
   </head>
   <body>
+    <div id="main_container">
     <div id="title_container">
     <header id="header">
-        <img src="n1001357.png" id="reel">
         <h1 class="title">IMDB Movie Generator</h1>
     </header>
-    <form>
+    <form id="form">
       <div class="submit"><label for="movie" id="movie_label">Movie: <input type="text" name="movie" id="movie"></label><br>
       <input type="submit" id="submit_button" value="GET RATINGS!"></div>
     </form><br>
     </div>
-    <div id="container">
-        <div id="results"></div>
+    <div id="results_container">
+        <div id="results"><div class="loading">
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+          <div class="loading-bar"></div>
+        </div></div>
     </div>
 
     <div class="pagination"></div>
-    
+    </div>
     
     <!-- <script src="pagination.js"></script>     -->
     <script src="api.js"></script>
