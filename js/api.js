@@ -9,7 +9,7 @@ class Api_Fetch {
     this.$loadingBar = $(".loading");
     this.$posters = $(".posterContainer");
     this.$logo = $("#logo");
-    this.url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
+    this.url = "https://www.omdbapi.com/?apikey=ba2a0c60&";
   }
 
   async getMovies(url) {
