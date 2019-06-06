@@ -1,5 +1,22 @@
 * {
     box-sizing: border-box;
+    font-family: 'vcr_mono';
+    color: rgb(77, 77, 77);
+}
+
+@font-face {
+  font-family: 'modenineregular';
+  src: url('fonts/MODENINE.TTF');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'vcr_mono';
+  src: url('fonts/VCR_OSD_MONO_1.001.ttf');
+  font-weight: normal;
+  font-style: normal;
+  
 }
 
 body {
@@ -7,9 +24,22 @@ body {
     max-height: 100%;
 }
 
+#search_tip {
+  display: flex;
+  margin-top: 1vh;
+  justify-content: center;
+}
+
 #movie {
     height: 20px;
     margin-right: 10px;
+}
+
+#logo {
+  max-height: 50%;
+  max-width: 50%;
+  opacity: 0.7;
+  margin-top: 10%;
 }
 
 #header {
@@ -19,8 +49,8 @@ body {
 
  .loading {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 30%;
+  left: 49%;
 }
 .loading-bar {
   display: inline-block;
@@ -58,6 +88,12 @@ body {
   }
 }
 
+#copy {
+  display: flex;
+  justify-content: center;
+  margin-right: 39%;
+}
+
 #title_container {
   align-content: center;
   justify-content: center;
@@ -72,9 +108,8 @@ body {
     background-color: rgba(210, 180, 140, .6);
     height: 100%;
     min-height: 55vh;
-    width: 60%;
+    max-width: 45%;
     padding-top: 1em;
-    padding-bottom: 1em;
 }
 
 #submit_button {
@@ -106,6 +141,7 @@ a {
     display: flex;
     justify-content: center;
     padding-top: 20px;
+    /* font-family: 'modenineregular'; */
 }
 
 .submit {
@@ -169,3 +205,10 @@ label {
     max-height: 50%;
     max-width: 50%;
 }
+
+/* @media(max-width: 900px) {
+  #splash{
+    position: fixed;
+    top: 20%;
+  }
+} */

@@ -3,6 +3,7 @@ api.$loadingBar.hide();
 
 $("form").submit(function(event) {
     event.preventDefault();
+    api.$logo.hide();
     const newUrl = api.url + `s=${api.$movie.val()}`
     api.getMovies(newUrl)
         .then(val => {
@@ -19,6 +20,14 @@ $("form").submit(function(event) {
             return val;
         })
   }); //end form
+
+$(document).on('keydown keyup', '#movie', function() {
+    if(api.$movie.val() == '') {
+        api.$searchTip.fadeIn(500);
+    } else {
+        api.$searchTip.fadeOut(500);
+    }
+})
 
 $(document).on('mouseenter', '.poster', function () {
     $(this)

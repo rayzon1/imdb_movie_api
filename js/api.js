@@ -3,10 +3,12 @@ class Api_Fetch {
   constructor() {
     this.$movie = $('#movie');
     this.$results = $('#results');
+    this.$searchTip = $('#search_tip');
     this.$resultsDiv = $("#results_container");
     this.$pagination = $('.pagination');
     this.$loadingBar = $(".loading");
     this.$posters = $(".posterContainer");
+    this.$logo = $("#logo");
     this.url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
   }
 

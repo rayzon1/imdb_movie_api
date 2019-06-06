@@ -15,28 +15,32 @@
     <div id="main_container">
     <div id="title_container">
     <header id="header">
-        <h1 class="title">IMDB Movie Generator</h1>
+        <h1 class="title">Omdb Review App</h1>
     </header>
     <form id="form">
-      <div class="submit"><label for="movie" id="movie_label">Movie: <input type="text" name="movie" id="movie"></label><br>
+      <div class="submit"><label for="movie" id="movie_label">Movie: <input type="text" name="movie" id="movie" autocomplete="off"></label><br>
       <input type="submit" id="submit_button" value="GET RATINGS!"></div>
     </form><br>
     </div>
     <div id="results_container">
-        <div id="results"><div class="loading">
-          <div class="loading-bar"></div>
-          <div class="loading-bar"></div>
-          <div class="loading-bar"></div>
-          <div class="loading-bar"></div>
-        </div></div>
+      <span id="search_tip">Search Movies to get reviews!</span>
+      <img src="images/omdb_logo.png" id="logo">
+      <div id="results"><div class="loading">
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+      </div></div>
     </div>
 
     <div class="pagination"></div>
     </div>
-    
+    <footer>
+      <span id="copy">&copy GFunk 2019</span>
+    </footer>
     <!-- <script src="pagination.js"></script>     -->
-    <script src="api.js"></script>
-    <script src="main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
   </body>
 
 
