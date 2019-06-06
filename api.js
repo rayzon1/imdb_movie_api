@@ -1,31 +1,33 @@
-// Global variables for dom manipulation and omdapi url.
-const $movie = $('#movie');
-const $results = $("#results");
-const $pagination = $('.pagination');
-const url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
 
-// This will communicate with the api while returning titles in json format. 
-const getMovies = async (url) => {
-  try {
-    const val = await fetch(url);
-    return await val.json();
+class Api_Fetch {
+  constructor() {
+    this.$movie = $('#movie');
+    this.$results = $('#results');
+    this.$resultsDiv = $("#results_container");
+    this.$pagination = $('.pagination');
+    this.$loadingBar = $(".loading");
+    this.$posters = $(".posterContainer");
+    this.url = "http://www.omdbapi.com/?apikey=ba2a0c60&";
   }
-  catch (err) {
-    return console.log('There was an error', err.message);
+
+  async getMovies(url) {
+    try {
+      const val = await fetch(url);
+      return await val.json();
+    } catch (error) {
+      return console.log('There was an error', error.message);
+    }
   }
-}
 
-const getIds = (movs) => {
-  return movs.map( mov => mov.imdbID)
-}
+  getIds(movs) {
+    return movs.map( mov => mov.imdbID);
+  }
 
-const getMoviesbyId = (val) => {
-  return val.map(mov => getMovies(url + `i=${mov}`))
-}
+  getMoviesbyId(val) {
+    return val.map(mov => this.getMovies(this.url + `i=${mov}`))
+  }
 
-const createMovies = (res) => {
-  
-  // create <span> for each rating!
+  createMovies(res){
     if(res['Ratings'].length > 0){
       let construct = `<a href="https://www.imdb.com/title/${res['imdbID']}" target="_blank"><div class="posterContainer">`;
       construct += `<img src="${res['Poster']}" class="poster" >`;
@@ -39,28 +41,30 @@ const createMovies = (res) => {
       </div></a>`;
       construct += `<span>${res['Title']}</span><br>`;
       construct += '</div>';
-      
-      $results.append(construct);
-      $loadingBar.hide();
+      this.$results.append(construct);
+      this.$loadingBar.hide();
     }
   }
 
+  generateButtons(results){
+      let res = results.totalResults
+      let num = Math.floor((res / 10));
+      if (res > 100) {
+          for(let i = 1; i < 10; i ++){
+              this.$pagination.append(
+                  `<button class="button">${i}</button>`
+                  );
+          }
+      } else {
+          for(let i = 1; i < num; i ++){
+              this.$pagination.append(
+                  `<button class="button">${i}</button>`
+                  );
+            }
+        }
+    } 
 
-const generateButtons = (results) => {
-    let res = results.totalResults
-    let num = Math.floor((res / 10));
-    if (res > 100) {
-        for(let i = 1; i < 10; i ++){
-            $pagination.append(
-                `<button class="button">${i}</button>`
-                );
-        }
-    } else {
-        for(let i = 1; i < num; i ++){
-            $pagination.append(
-                `<button class="button">${i}</button>`
-                );
-        }
-    }
 }
+
+
 

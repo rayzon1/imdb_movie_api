@@ -1,24 +1,21 @@
-//const gen = new ImdbGenerator();
-const $resultsDiv = $("#results_container");
-const $loadingBar = $(".loading");
-const $posters = $(".posterContainer");
-$loadingBar.hide(); 
+const api = new Api_Fetch();
+api.$loadingBar.hide(); 
 
 $("form").submit(function(event) {
     event.preventDefault();
-    const newUrl = url + `s=${$movie.val()}`
-    getMovies(newUrl)
+    const newUrl = api.url + `s=${api.$movie.val()}`
+    api.getMovies(newUrl)
         .then(val => {
             $('.button').remove()
-            generateButtons(val);
+            api.generateButtons(val);
             return val;
         })
-        .then(val => getIds(val.Search)) //gets search results by ID
-        .then(val => getMoviesbyId(val))
+        .then(val => api.getIds(val.Search)) //gets search results by ID
+        .then(val => api.getMoviesbyId(val))
         .then(val => Promise.all(val))
         .then(val => {
             $('.posterContainer').remove()
-            val.map(mov => createMovies(mov));
+            val.map(mov => api.createMovies(mov));
             return val;
         })
   }); //end form
@@ -45,17 +42,16 @@ $(document).on('mouseenter', '.cover', function () {
 
 $(document).on('click', '.button', function () {
     $('#results').empty();
-    $resultsDiv.append($loadingBar);
-    $loadingBar.show();
-    const newUrl = url + `s=${$movie.val()}` + '&' + `page=${$(this).text()}`
-    getMovies(newUrl)
-        .then(val => getIds(val.Search)) //gets search results by ID
-        .then(val => getMoviesbyId(val))
+    api.$resultsDiv.append(api.$loadingBar);
+    api.$loadingBar.show();
+    const newUrl = api.url + `s=${api.$movie.val()}` + '&' + `page=${$(this).text()}`
+    api.getMovies(newUrl)
+        .then(val => api.getIds(val.Search)) //gets search results by ID
+        .then(val => api.getMoviesbyId(val))
         .then(val => Promise.all(val))
         .then(val => {
-            val.map(mov => createMovies(mov));
+            val.map(mov => api.createMovies(mov));
             return val;
         })
-    
-    
+
 }); //end click
